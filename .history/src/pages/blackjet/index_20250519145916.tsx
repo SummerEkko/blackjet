@@ -1,35 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
-// 扑克牌面
 const cardDeck = [
   "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"
 ];
 
-// Hi-Lo 计分
+// Hi-Lo计分
 function getHiLoValue(card) {
   if (["2", "3", "4", "5", "6"].includes(card)) return 1;
   if (["10", "J", "Q", "K", "A"].includes(card)) return -1;
   return 0;
 }
 
+// 随机出一张牌
 function drawRandomCard() {
   const i = Math.floor(Math.random() * cardDeck.length);
   return cardDeck[i];
 }
 
 const HiLoTrainer = () => {
-  const [currentCard, setCurrentCard] = useState(""); // 初始为空，避免 SSR/CSR 不一致
+  const [currentCard, setCurrentCard] = useState(drawRandomCard());
   const [count, setCount] = useState(0);
-  const [history, setHistory] = useState([]);
+  const [history, setHistory] = useState([currentCard]);
   const [showCount, setShowCount] = useState(false);
-
-  // 只在客户端初始化第一张牌
-  useEffect(() => {
-    const firstCard = drawRandomCard();
-    setCurrentCard(firstCard);
-    setHistory([firstCard]);
-    setCount(getHiLoValue(firstCard));
-  }, []);
 
   const handleNext = () => {
     const newCard = drawRandomCard();
@@ -42,15 +34,12 @@ const HiLoTrainer = () => {
   const handleShowCount = () => setShowCount(true);
 
   const handleReset = () => {
-    const firstCard = drawRandomCard();
-    setCurrentCard(firstCard);
-    setHistory([firstCard]);
-    setCount(getHiLoValue(firstCard));
+    const newCard = drawRandomCard();
+    setCurrentCard(newCard);
+    setHistory([newCard]);
+    setCount(getHiLoValue(newCard));
     setShowCount(false);
   };
-
-  // 未初始化时不渲染（防止 SSR hydration 错误）
-  if (!currentCard) return null;
 
   return (
     <div style={{ maxWidth: 350, margin: "30px auto", padding: 20, border: "1px solid #ddd", borderRadius: 10 }}>
