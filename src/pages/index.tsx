@@ -1,77 +1,70 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import Link from "next/link";
 
-// Card face type
-type Card = "A" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "10" | "J" | "Q" | "K";
-
-const cardDeck: Card[] = [
-  "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"
-];
-
-// Hi-Lo counting value
-function getHiLoValue(card: Card): number {
-  if (["2", "3", "4", "5", "6"].includes(card)) return 1;
-  if (["10", "J", "Q", "K", "A"].includes(card)) return -1;
-  return 0;
-}
-
-function drawRandomCard(): Card {
-  const i = Math.floor(Math.random() * cardDeck.length);
-  return cardDeck[i];
-}
-
-const HiLoTrainer: React.FC = () => {
-  const [currentCard, setCurrentCard] = useState<Card | "">(""); // "" before first draw
-  const [count, setCount] = useState<number>(0);
-  const [history, setHistory] = useState<Card[]>([]);
-  const [showCount, setShowCount] = useState<boolean>(false);
-
-  useEffect(() => {
-    const firstCard = drawRandomCard();
-    setCurrentCard(firstCard);
-    setHistory([firstCard]);
-    setCount(getHiLoValue(firstCard));
-  }, []);
-
-  const handleNext = () => {
-    const newCard = drawRandomCard();
-    setCurrentCard(newCard);
-    setHistory([...history, newCard]);
-    setCount(count + getHiLoValue(newCard));
-    setShowCount(false);
-  };
-
-  const handleShowCount = () => setShowCount(true);
-
-  const handleReset = () => {
-    const firstCard = drawRandomCard();
-    setCurrentCard(firstCard);
-    setHistory([firstCard]);
-    setCount(getHiLoValue(firstCard));
-    setShowCount(false);
-  };
-
-  if (!currentCard) return null;
-
+export default function Home() {
   return (
-    <div style={{ maxWidth: 350, margin: "30px auto", padding: 20, border: "1px solid #ddd", borderRadius: 10 }}>
-      <h2>Blackjack Hi-Lo Counting Trainer</h2>
-      <div style={{ fontSize: 48, margin: "20px 0" }}>{currentCard}</div>
-      <button onClick={handleNext}>Next Card</button>
-      <button onClick={handleShowCount} style={{ marginLeft: 10 }}>Show Current Count</button>
-      <button onClick={handleReset} style={{ marginLeft: 10 }}>Reset</button>
-      {showCount && (
-        <div style={{ marginTop: 20, fontSize: 20 }}>
-          Current Hi-Lo Count: <b>{count}</b>
+    <div style={{
+      minHeight: "100vh",
+      background: "linear-gradient(120deg,#F8FFAE 0%,#43C6AC 100%)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center"
+    }}>
+      <div style={{
+        padding: 36,
+        borderRadius: 18,
+        background: "rgba(255,255,255,0.92)",
+        boxShadow: "0 8px 32px rgba(60,120,150,0.12)",
+        minWidth: 340,
+        maxWidth: 420
+      }}>
+        <h1 style={{ textAlign: "center", fontSize: 32, fontWeight: 800, marginBottom: 16 }}>
+          Blackjack Trainer
+        </h1>
+        <p style={{ textAlign: "center", marginBottom: 36, fontSize: 16, color: "#333" }}>
+          Choose a counting method to start practicing!
+        </p>
+        <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+          <Link
+            href="/hilo"
+            style={{
+              padding: "16px 0",
+              background: "linear-gradient(90deg,#43cea2,#185a9d)",
+              color: "#fff",
+              borderRadius: 10,
+              textAlign: "center",
+              fontWeight: 600,
+              fontSize: 18,
+              letterSpacing: 1,
+              boxShadow: "0 2px 8px rgba(50,100,120,0.13)",
+              textDecoration: "none",
+              transition: "background 0.2s",
+              display: "block"
+            }}
+          >
+            Hi-Lo Algorithm
+          </Link>
+          <Link
+            href="/hilo-true"
+            style={{
+              padding: "16px 0",
+              background: "linear-gradient(90deg,#fc466b,#3f5efb)",
+              color: "#fff",
+              borderRadius: 10,
+              textAlign: "center",
+              fontWeight: 600,
+              fontSize: 18,
+              letterSpacing: 1,
+              boxShadow: "0 2px 8px rgba(50,100,120,0.13)",
+              textDecoration: "none",
+              transition: "background 0.2s",
+              display: "block"
+            }}
+          >
+            Hi-Lo + True Count Algorithm
+          </Link>
         </div>
-      )}
-      <div style={{ marginTop: 30 }}>
-        <b>History:</b> {history.join(", ")}
-      </div>
-      <div style={{ color: "#666", fontSize: 13, marginTop: 12 }}>
-        Rule: 2~6 = +1, 10/J/Q/K/A = -1, 7/8/9 = 0. Try to keep track in your head and check your result!
       </div>
     </div>
   );
-};
-
-export default HiLoTrainer;
+}
