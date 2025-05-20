@@ -125,10 +125,11 @@ export default function HiLoTruePage() {
   return (
     <div
       style={{
-        minHeight: "100vh",
-        width: "100vw",
-        background: "#f4f6fb",
-        position: "relative",
+        position: "fixed",
+        inset: 0,
+        zIndex: -1,
+        background:
+          "linear-gradient(120deg, #f9fbb2 0%, #b8f1cc 50%, #5ee8c5 100%)",
       }}
     >
       {/* Home 按钮 */}
