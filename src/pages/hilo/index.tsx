@@ -97,11 +97,10 @@ export default function HiLoPage() {
   return (
     <div
       style={{
-        minHeight: "100vh",
-        width: "100vw",
+        position: "fixed",
+        inset: 0,
+        zIndex: 0,
         background: "linear-gradient(120deg, #f9fbb2 0%, #b8f1cc 50%, #5ee8c5 100%)",
-        position: "relative",
-        overflowX: "hidden",
       }}
     >
       <Link href="/" legacyBehavior>

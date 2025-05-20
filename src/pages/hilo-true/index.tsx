@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 
+// 卡牌常量和工具
 type Card = "A" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "10" | "J" | "Q" | "K";
-const cardFaces: Card[] = [
-  "A","2","3","4","5","6","7","8","9","10","J","Q","K"
-];
+const cardFaces: Card[] = ["A","2","3","4","5","6","7","8","9","10","J","Q","K"];
 const TOTAL_DECKS = 6, CARDS_PER_DECK = 52, TOTAL_CARDS = TOTAL_DECKS * CARDS_PER_DECK;
-
 function shuffle<T>(arr: T[]): T[] {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
@@ -88,12 +86,10 @@ export default function HiLoTruePage() {
   return (
     <div
       style={{
-        minHeight: "100vh",
-        width: "100vw",
+        position: "fixed",
+        inset: 0,
+        zIndex: 0,
         background: "linear-gradient(120deg, #f8ffae 0%, #43cea2 100%)",
-        position: "relative",
-        boxSizing: "border-box",
-        overflowX: "hidden",
       }}
     >
       {/* Home 按钮 */}
@@ -120,7 +116,7 @@ export default function HiLoTruePage() {
           ← Home
         </a>
       </Link>
-      {/* 居中区 */}
+      {/* 居中卡片 */}
       <div
         style={{
           display: "flex",
@@ -129,7 +125,7 @@ export default function HiLoTruePage() {
           minHeight: "100vh",
         }}
       >
-        {/* 卡片有色渐变 */}
+        {/* 卡片渐变 */}
         <div
           style={{
             maxWidth: 440,
@@ -137,7 +133,7 @@ export default function HiLoTruePage() {
             margin: "0 auto",
             padding: "38px 32px 36px 32px",
             borderRadius: 32,
-            background: "linear-gradient(135deg, #6ee7b7 0%, #38bdf8 100%)", // 蓝绿主色
+            background: "linear-gradient(135deg, #6ee7b7 0%, #38bdf8 100%)",
             boxShadow: "0 12px 60px 0 rgba(80,210,170,0.16), 0 2px 32px 0 rgba(56,189,248,0.12)",
             border: "2.2px solid #c4f2e7",
             fontFamily: "'Segoe UI', 'Arial', sans-serif",
@@ -148,7 +144,6 @@ export default function HiLoTruePage() {
             justifyContent: "flex-start",
           }}
         >
-          {/* 内容叠加毛玻璃白色条，增强对比 */}
           <div style={{
             background: "rgba(255,255,255,0.82)",
             borderRadius: 20,
@@ -186,7 +181,6 @@ export default function HiLoTruePage() {
           >
             {currentCard}
           </div>
-          {/* 按钮区 */}
           <div style={{
             display: "flex",
             justifyContent: "center",
@@ -241,7 +235,6 @@ export default function HiLoTruePage() {
               Bet Unit: <b>{betUnit}</b>
             </div>
           )}
-          {/* 历史记录 */}
           <div
             style={{
               marginTop: 18,
@@ -258,7 +251,6 @@ export default function HiLoTruePage() {
           >
             <b>History:</b> {history.join(", ")}
           </div>
-          {/* 规则说明 */}
           <div
             style={{
               color: "#009888",
