@@ -153,7 +153,7 @@ export default function HiLoTruePage() {
           minWidth: "100vw",
         }}
       >
-        <Grid item xs={12} sm={8} md={6} lg={4}>
+        <Grid {...({ item: true, xs: 12, sm: 8, md: 6, lg: 4 } as any)}>
           <Card
             sx={{
               borderRadius: { xs: 3, sm: 4 },
